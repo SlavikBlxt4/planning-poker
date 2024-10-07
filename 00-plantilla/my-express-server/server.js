@@ -47,6 +47,31 @@ app.get('/peliculas', async (req, res) => {
 });
 
 
+// PUT PARA PELICULAS
+// Ruta para manejar peticiones PUT (Actualizar una película por ID)
+app.put('/peliculas/:id', async (req, res) => {
+    const id = req.params.id;
+    const { titulo, descripcion, director, anyo, url_imagen } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE peliculas SET titulo = $1, descripcion = $2, director = $3, anyo = $4, url_imagen = $5 WHERE id = $6 RETURNING *',
+            [titulo, descripcion, director, anyo, url_imagen, id]
+        );
+        
+        if (result.rowCount === 0) {
+            res.status(404).send('Película no encontrada');
+        } else {
+            res.json(result.rows[0]); // Retorna la película actualizada
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al actualizar la película');
+    }
+});
+
+
+
 
 
 // Ruta para manejar peticiones POST (Ejemplo: Insertar datos en una tabla)
