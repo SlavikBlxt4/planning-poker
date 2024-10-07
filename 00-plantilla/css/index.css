@@ -1,0 +1,106 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: #ffffff; /* Change the background color as needed */
+  }
+   
+  #logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+  }
+
+  #logo {
+    font-family: Arial, sans-serif; /* Change the font family as needed */
+    font-size: 60px;
+    color: #000000; /* Black color for the logo */
+    opacity: 0;
+    animation: fadeInLogo 2s ease forwards, moveLeft 2s 0.5s ease forwards; /* Animation for logo fade-in and move left */
+  }
+
+  #name {
+    font-family: Arial, sans-serif; /* Change the font family as needed */
+    font-size: 60px; /* Match the font size with the logo */
+    color: #000000; /* Black color for the name */
+    opacity: 0;
+    animation: fadeInName 2s 0.5s ease forwards, moveLeft 2s 0.5s ease forwards; /* Animation for name fade-in and move left */
+    margin-left: 10px; /* Adjust the margin to align with the logo */
+  }
+
+  @keyframes fadeInLogo {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInName {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes moveLeft {
+    0% {
+      transform: translateX(50%);
+    }
+    100% {
+      transform: translateX(calc(-2% - 20vw)); /* Adjust the value for proper alignment */
+    }
+  }
+
+  
+#section1 {
+    height: 100vh;
+    background-color: blue;
+    width: 100%;
+}
+
+#section2{
+    height: 100vmax;
+    background-color: green;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#section3{
+    height: 100vmax;
+    background-color: red;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ /* Adjust font size for smaller screens */
+ @media only screen and (max-width: 768px) {
+    #logo {
+      font-size: 60px;
+    }
+
+    #name {
+      font-size: 18px;
+    }
+  }
+
+  /* Adjust font size for even smaller screens */
+  @media only screen and (max-width: 480px) {
+    #logo {
+      font-size: 40px;
+    }
+
+    #name {
+      font-size: 14px;
+    }
+  }
