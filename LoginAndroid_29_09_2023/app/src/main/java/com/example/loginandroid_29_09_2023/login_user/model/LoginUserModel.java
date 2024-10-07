@@ -17,55 +17,53 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginUserModel implements ContractLoginUser.Model {
-    private static final String IP_BASE = "169.254.225.61:8080";
+    private static final String IP_BASE = "10.0.2.2:3000";
     private LoginUserPresenter presenter;
-    public LoginUserModel(LoginUserPresenter presenter){
+
+    public LoginUserModel(LoginUserPresenter presenter) {
         this.presenter = presenter;
     }
 
 
     @Override
     public void loginAPI(User user, final OnLoginUserListener onLoginUserListener) {
-        // Crear una instancia de ApiService
-        ApiService apiService = RetrofitCliente.getClient("http://" + IP_BASE + "/untitled/").
-                create(ApiService.class);
+        Log.d("LoginUserModel", "Llamando a la API para login con usuario: " + user.getUsername());
 
-// Realizar la solicitud al Servlet
-        // Call<MyData> call = apiService.getMyData("1");
-        Call<MyData> call = apiService.getDataUser ("USER.LOGIN");
+        ApiService apiService = RetrofitCliente.getClient("http://" + IP_BASE + "/").create(ApiService.class);
+
+        Call<MyData> call = apiService.getDataUser("usuarios/login");
         call.enqueue(new Callback<MyData>() {
             @Override
             public void onResponse(Call<MyData> call, Response<MyData> response) {
                 if (response.isSuccessful()) {
-                    // Procesar la respuesta aquí
                     MyData myData = response.body();
-
-                    //String message = myData.getMessage();
+                    Log.d("LoginUserModel", "Respuesta exitosa de la API");
 
                     ArrayList<User> lstUsers = myData.getLstUsers();
-
-                    onLoginUserListener.onFinished(lstUsers.get(0));
-
-                    // Actualizar la interfaz de usuario con el mensaje recibido
+                    if (!lstUsers.isEmpty()) {
+                        Log.d("LoginUserModel", "Usuario recibido: " + lstUsers.get(0).getUsername());
+                        onLoginUserListener.onFinished(lstUsers.get(0));
+                    } else {
+                        Log.e("LoginUserModel", "Lista de usuarios vacía");
+                        onLoginUserListener.onFailure("Lista de usuarios vacía");
+                    }
                 } else {
-                    // Manejar una respuesta no exitosa
-                    // Manejar una respuesta no exitosa
-                    Log.e("Response Error", "Código de estado HTTP: " + response.code());
+                    Log.e("LoginUserModel", "Código de estado HTTP: " + response.code());
                     try {
                         String errorBody = response.errorBody().string();
-                        Log.e("Response Error", "Cuerpo de error: " + errorBody);
+                        Log.e("LoginUserModel", "Cuerpo de error: " + errorBody);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    onLoginUserListener.onFailure("Error en la respuesta del servidor");
                 }
             }
 
             @Override
             public void onFailure(Call<MyData> call, Throwable t) {
-                // Manejar errores de red o del servidor
-                Log.e("Response Error", "Cuerpo de error: " + t.getMessage());
+                Log.e("LoginUserModel", "Error en la llamada a la API: " + t.getMessage());
+                onLoginUserListener.onFailure(t.getMessage());
             }
         });
     }
-    }
-
+}

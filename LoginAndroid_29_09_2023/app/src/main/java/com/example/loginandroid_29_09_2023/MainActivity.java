@@ -8,24 +8,13 @@ import android.os.Handler;
 
 import com.example.loginandroid_29_09_2023.lstMov.view.LstMovies;
 
-public class MainActivity extends AppCompatActivity{
-    private static final long SPLASH_DISPLAY_LENGTH = 3000;
-
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.SplashScreen);
+        setTheme(R.style.SplashScreen); // Sigue mostrando el Splash Screen al principio
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_user_m); // Aquí se debe mostrar el login
 
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(MainActivity.this,
-                        LstMovies.class);
-                startActivity(mainIntent);
-                MainActivity.this.finish();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+        // Elimina la redirección automática para que el usuario pueda interactuar con la pantalla de login
     }
 }

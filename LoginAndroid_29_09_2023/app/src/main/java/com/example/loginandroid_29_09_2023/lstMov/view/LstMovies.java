@@ -38,7 +38,11 @@ public class LstMovies extends AppCompatActivity
 
     }
     @SuppressLint("NonConstantResourceId")
+
+     /*
     @Override
+
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_opcion1:
@@ -53,6 +57,8 @@ public class LstMovies extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
+      */
 
 
     @Override
