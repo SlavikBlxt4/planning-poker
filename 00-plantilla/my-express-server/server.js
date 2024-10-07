@@ -34,6 +34,21 @@ app.get('/usuarios/login', async (req, res) => {
     }
 });
 
+// GET PARA PELICULAS
+// Ruta para obtener todas las películas
+app.get('/peliculas', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM peliculas');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener las películas');
+    }
+});
+
+
+
+
 // Ruta para manejar peticiones POST (Ejemplo: Insertar datos en una tabla)
 app.post('/data', async (req, res) => {
     const { campo1, campo2 } = req.body; // Ajusta los campos según tu tabla
