@@ -34,7 +34,7 @@ public class LstMovies extends AppCompatActivity
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        lstMoviesPresenter = new LstMoviesPresenter(this);
+        lstMoviesPresenter = new LstMoviesPresenter(this, this);
         lstMoviesPresenter.lstMovies("");
 
     }
@@ -72,11 +72,13 @@ public class LstMovies extends AppCompatActivity
     public void successMovies(ArrayList<Pelicula> lstPelicula) {
         if (lstPelicula == null || lstPelicula.isEmpty()) {
             Log.e("LstMovies", "Lista de películas vacía");
+            Toast.makeText(this, "Lista de películas vacía", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Mostrar una notificación para confirmar la recepción de datos
-        Toast.makeText(this, lstPelicula.get(0).getTitulo(), Toast.LENGTH_SHORT).show();
+        Log.d("LstMovies", "Películas recibidas: " + lstPelicula.size());
+        Toast.makeText(this, "Películas recibidas: " + lstPelicula.size(), Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.recyclerViewPeliculas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -86,12 +88,14 @@ public class LstMovies extends AppCompatActivity
         adapter.setOnItemClickListener(new PeliculaAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Pelicula pelicula) {
+                Log.d("LstMovies", "Película seleccionada: " + pelicula.getTitulo());
                 Toast.makeText(LstMovies.this, pelicula.getTitulo(), Toast.LENGTH_SHORT).show();
             }
         });
 
         recyclerView.setAdapter(adapter);
     }
+
 
 
 

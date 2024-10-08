@@ -1,5 +1,6 @@
 package com.example.loginandroid_29_09_2023.utils;
 
+import com.example.loginandroid_29_09_2023.beans.Pelicula;
 import com.example.loginandroid_29_09_2023.beans.User;
 import com.example.loginandroid_29_09_2023.login_user.model.data.MyData;
 import com.example.loginandroid_29_09_2023.lstMov.data.DataMovies;
@@ -37,8 +38,9 @@ public interface ApiService {
                                     @Query("director") String director);
       }*/
 
-        @GET("/peliculas")
-        Call<DataMovies> getDataMovies(@Query("ACTION") String action);
+  // Método que devuelve una lista de películas directamente
+  @GET("/peliculas")
+  Call<List<Pelicula>> getDataMovies(@Query("ACTION") String action);
 
         @GET("MyServlet")
         Call<DataMovies> getDataMovies2(@Query("ACTION") String action);
