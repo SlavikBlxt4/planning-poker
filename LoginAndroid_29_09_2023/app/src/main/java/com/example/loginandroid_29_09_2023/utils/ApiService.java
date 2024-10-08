@@ -1,7 +1,10 @@
 package com.example.loginandroid_29_09_2023.utils;
 
+import com.example.loginandroid_29_09_2023.beans.User;
 import com.example.loginandroid_29_09_2023.login_user.model.data.MyData;
 import com.example.loginandroid_29_09_2023.lstMov.data.DataMovies;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,7 +19,13 @@ public interface ApiService {
               "Content-Type: application/json"
       })
 
-      Call<MyData> getDataUser(@Query("ACTION") String action);
+      @GET("usuarios/login")
+      Call<List<User>> getDataUser(
+              @Query("ACTION") String action,
+              @Query("EMAIL") String email,
+              @Query("PASSWORD") String password
+      );
+
       /*@GET("MyServlet")
         Call<MyData> getDataUser(@Query("ACTION") String action,
                                  @Query("EMAIL") String email,

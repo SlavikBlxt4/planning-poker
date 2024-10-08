@@ -25,14 +25,32 @@ const port = 3000;
 pool.connect();
 // Ruta para manejar peticiones GET (Ejemplo: Obtener todos los datos de una tabla)
 app.get('/usuarios/login', async (req, res) => {
+    const { ACTION, EMAIL, PASSWORD } = req.query;
+
+    if (ACTION !== 'USER.LOGIN') {
+        return res.status(400).send('Acción no válida');
+    }
+
     try {
-        const result = await pool.query('SELECT * FROM usuarios'); // Cambia 'tu_tabla' al nombre de tu tabla
-        res.json(result.rows);
+        if (!EMAIL || !PASSWORD) {
+            return res.status(400).send('Faltan parámetros: EMAIL y PASSWORD');
+        }
+
+        const result = await pool.query('SELECT * FROM usuarios WHERE email = $1 AND contraseña = $2', [EMAIL, PASSWORD]);
+
+        if (result.rows.length > 0) {
+            res.json(result.rows);  // Devolver una lista de usuarios
+        } else {
+            res.status(401).send('Usuario no encontrado o credenciales incorrectas');
+        }
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error al obtener los datos');
+        res.status(500).send('Error en el servidor');
     }
 });
+
+
+
 
 // GET PARA PELICULAS
 // Ruta para obtener todas las películas

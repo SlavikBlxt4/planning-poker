@@ -13,13 +13,15 @@ import com.example.loginandroid_29_09_2023.R;
 import com.example.loginandroid_29_09_2023.beans.User;
 import com.example.loginandroid_29_09_2023.login_user.ContractLoginUser;
 import com.example.loginandroid_29_09_2023.login_user.presenter.LoginUserPresenter;
+import com.google.android.material.button.MaterialButton;
 
+//FUNCIONALIDAD ACTIVITY LOGIN
 public class LoginUserM extends AppCompatActivity implements ContractLoginUser.View {
 
     private EditText edtEmail;
     private EditText edtPassword;
-    private Button btnLogin;
-
+    private MaterialButton btnLogin;
+//INSTANCIO SERVICE
     private LoginUserPresenter presenter = new LoginUserPresenter(this);
 
     /* PATRÓN SINGLETON */
@@ -31,12 +33,13 @@ public class LoginUserM extends AppCompatActivity implements ContractLoginUser.V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("LoginUserM", "onCreate llamado"); // Agregar un log aquí
+        Toast.makeText(this, "Actividad creada", Toast.LENGTH_SHORT).show(); // Mostrar un toast aquí
         setContentView(R.layout.activity_login_user_m);
         mainActivity = this;
-
-        // Inicializar componentes
-        initComponents();
+        initComponents();  // Inicializar componentes
     }
+
 
     private void initComponents() {
         Log.d("LoginUserM", "Iniciando componentes de la UI");

@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.loginandroid_29_09_2023.beans.User;
 import com.example.loginandroid_29_09_2023.login_user.ContractLoginUser;
 import com.example.loginandroid_29_09_2023.login_user.model.LoginUserModel;
-
+//PARECIDO A UN SERVICE ENTRE VISTA Y MODEL
 public class LoginUserPresenter implements ContractLoginUser.Presenter, ContractLoginUser.Model.OnLoginUserListener {
 
     private ContractLoginUser.View view;

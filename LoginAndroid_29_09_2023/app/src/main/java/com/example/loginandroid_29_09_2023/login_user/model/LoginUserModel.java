@@ -11,11 +11,12 @@ import com.example.loginandroid_29_09_2023.utils.RetrofitCliente;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+//DAO/REPOSITORY
 public class LoginUserModel implements ContractLoginUser.Model {
     private static final String IP_BASE = "10.0.2.2:3000";
     private LoginUserPresenter presenter;
@@ -23,35 +24,36 @@ public class LoginUserModel implements ContractLoginUser.Model {
     public LoginUserModel(LoginUserPresenter presenter) {
         this.presenter = presenter;
     }
-
-
+//HAY QUE MODIFICAR
     @Override
     public void loginAPI(User user, final OnLoginUserListener onLoginUserListener) {
-        Log.d("LoginUserModel", "Llamando a la API para login con usuario: " + user.getUsername());
+        // Crear una instancia de ApiService
+        ApiService apiService = RetrofitCliente.getClient("http://" + IP_BASE).create(ApiService.class);
 
-        ApiService apiService = RetrofitCliente.getClient("http://" + IP_BASE + "/").create(ApiService.class);
+        // Realizar la solicitud al Servlet con los parámetros ACTION, EMAIL, y PASSWORD
+        Call<List<User>> call = apiService.getDataUser("USER.LOGIN", user.getUsername(), user.getToken());
 
-        Call<MyData> call = apiService.getDataUser("usuarios/login");
-        call.enqueue(new Callback<MyData>() {
+        call.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<MyData> call, Response<MyData> response) {
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful()) {
-                    MyData myData = response.body();
-                    Log.d("LoginUserModel", "Respuesta exitosa de la API");
+                    // Procesar la respuesta aquí
+                    List<User> lstUsers = response.body();
 
-                    ArrayList<User> lstUsers = myData.getLstUsers();
-                    if (!lstUsers.isEmpty()) {
-                        Log.d("LoginUserModel", "Usuario recibido: " + lstUsers.get(0).getUsername());
+                    if (lstUsers != null && !lstUsers.isEmpty()) {
+                        // Llamar al listener con el primer usuario
                         onLoginUserListener.onFinished(lstUsers.get(0));
                     } else {
-                        Log.e("LoginUserModel", "Lista de usuarios vacía");
-                        onLoginUserListener.onFailure("Lista de usuarios vacía");
+                        // Lista vacía o nula
+                        Log.e("LoginUserModel", "Lista de usuarios vacía o nula");
+                        onLoginUserListener.onFailure("Lista de usuarios vacía o nula");
                     }
                 } else {
-                    Log.e("LoginUserModel", "Código de estado HTTP: " + response.code());
+                    // Manejar una respuesta no exitosa
+                    Log.e("Response Error", "Código de estado HTTP: " + response.code());
                     try {
                         String errorBody = response.errorBody().string();
-                        Log.e("LoginUserModel", "Cuerpo de error: " + errorBody);
+                        Log.e("Response Error", "Cuerpo de error: " + errorBody);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -60,10 +62,12 @@ public class LoginUserModel implements ContractLoginUser.Model {
             }
 
             @Override
-            public void onFailure(Call<MyData> call, Throwable t) {
-                Log.e("LoginUserModel", "Error en la llamada a la API: " + t.getMessage());
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                // Manejar errores de red o del servidor
+                Log.e("Response Error", "Cuerpo de error: " + t.getMessage());
                 onLoginUserListener.onFailure(t.getMessage());
             }
         });
     }
 }
+
