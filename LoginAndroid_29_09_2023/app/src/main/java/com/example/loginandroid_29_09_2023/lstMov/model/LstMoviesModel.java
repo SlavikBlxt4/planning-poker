@@ -13,7 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LstMoviesModel implements ContractListMovies.Model {
-    private static final String IP_BASE = "10.0.0.2:8080";
+    private static final String IP_BASE = "10.0.0.2:3000";
     private LstMoviesPresenter presenter;
 
     public LstMoviesModel(LstMoviesPresenter presenter){
@@ -34,9 +34,13 @@ public class LstMoviesModel implements ContractListMovies.Model {
             public void onResponse(Call<DataMovies> call, Response<DataMovies> response) {
                 if (response.isSuccessful()) {
                     DataMovies myData = response.body();
+                    Log.d("LstMoviesModel", "Películas recibidas: " + myData.getLstPeliculas().size());
                     respuestaMovies.onFinished(myData.getLstPeliculas());
+                } else {
+                    Log.e("LstMoviesModel", "Error en la respuesta de la API: " + response.code());
                 }
             }
+
 
             @Override
             public void onFailure(Call<DataMovies> call, Throwable t) {

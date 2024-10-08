@@ -37,7 +37,7 @@ public interface ApiService {
                                     @Query("director") String director);
       }*/
 
-        @GET("MyServlet")
+        @GET("/peliculas")
         Call<DataMovies> getDataMovies(@Query("ACTION") String action);
 
         @GET("MyServlet")
