@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -69,22 +70,30 @@ public class LstMovies extends AppCompatActivity
 
     @Override
     public void successMovies(ArrayList<Pelicula> lstPelicula) {
+        if (lstPelicula == null || lstPelicula.isEmpty()) {
+            Log.e("LstMovies", "Lista de películas vacía");
+            return;
+        }
+
+        // Mostrar una notificación para confirmar la recepción de datos
         Toast.makeText(this, lstPelicula.get(0).getTitulo(), Toast.LENGTH_SHORT).show();
+
         recyclerView = findViewById(R.id.recyclerViewPeliculas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //peliculas = cargarDatos();
         adapter = new PeliculaAdapter(this, lstPelicula);
-        //PeliculaAdapter adapter = new PeliculaAdapter(this, peliculas);
+
         adapter.setOnItemClickListener(new PeliculaAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Pelicula pelicula) {
-                // Aquí manejas el clic en la película
                 Toast.makeText(LstMovies.this, pelicula.getTitulo(), Toast.LENGTH_SHORT).show();
             }
         });
+
         recyclerView.setAdapter(adapter);
     }
+
+
 
     @Override
     public void failureMovies(String err) {
