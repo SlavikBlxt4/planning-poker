@@ -1,5 +1,7 @@
 package com.example.loginandroid_29_09_2023.lstMov.presenter;
 
+import android.util.Log;
+
 import com.example.loginandroid_29_09_2023.beans.Pelicula;
 import com.example.loginandroid_29_09_2023.lstMov.ContractListMovies;
 import com.example.loginandroid_29_09_2023.lstMov.model.LstMoviesModel;
@@ -29,6 +31,7 @@ public class LstMoviesPresenter implements ContractListMovies.Presenter,
 
     @Override
     public void lstMovies(String filtro) {
+        Log.d("ListMoivies", "Listando peliculas");
         lstMoviesModel.moviesAPI("", this);
     }
 
