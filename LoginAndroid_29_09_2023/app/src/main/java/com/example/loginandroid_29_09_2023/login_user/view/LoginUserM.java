@@ -2,6 +2,7 @@ package com.example.loginandroid_29_09_2023.login_user.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.example.loginandroid_29_09_2023.R;
 import com.example.loginandroid_29_09_2023.beans.User;
 import com.example.loginandroid_29_09_2023.login_user.ContractLoginUser;
 import com.example.loginandroid_29_09_2023.login_user.presenter.LoginUserPresenter;
+import com.example.loginandroid_29_09_2023.lstMov.view.LstMovies;
 import com.google.android.material.button.MaterialButton;
 
 //FUNCIONALIDAD ACTIVITY LOGIN
@@ -101,6 +103,8 @@ public class LoginUserM extends AppCompatActivity implements ContractLoginUser.V
         Log.d("LoginUserM", "Login exitoso para el usuario: " + user.getUsername());
         Toast.makeText(mainActivity, "Login exitoso, bienvenido " + user.getUsername(), Toast.LENGTH_SHORT).show();
         // Redirigir a la siguiente pantalla o realizar alguna acción
+        Intent cambiarAPantallPelis = new Intent(LoginUserM.getInstance(), LstMovies.class);
+        startActivity(cambiarAPantallPelis);
     }
 
     // Implementación del callback para error en el login
