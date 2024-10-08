@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.loginandroid_29_09_2023.MainActivity;
 import com.example.loginandroid_29_09_2023.R;
 import com.example.loginandroid_29_09_2023.beans.User;
 import com.example.loginandroid_29_09_2023.login_user.ContractLoginUser;
@@ -102,6 +103,8 @@ public class LoginUserM extends AppCompatActivity implements ContractLoginUser.V
     public void successLogin(User user) {
         Log.d("LoginUserM", "Login exitoso para el usuario: " + user.getUsername());
         Toast.makeText(mainActivity, "Login exitoso, bienvenido " + user.getUsername(), Toast.LENGTH_SHORT).show();
+        Intent mainIntent = new Intent(MainActivity.this, LoginUserM.class);
+
         // Redirigir a la siguiente pantalla o realizar alguna acción
         Intent cambiarAPantallPelis = new Intent(LoginUserM.getInstance(), LstMovies.class);
         startActivity(cambiarAPantallPelis);

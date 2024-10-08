@@ -1,6 +1,8 @@
 package com.example.loginandroid_29_09_2023.beans;
 
-public class Pelicula {
+import java.io.Serializable;
+
+public class Pelicula implements Serializable {
     private int id;
     private String titulo;
     private String descripcion;

@@ -56,7 +56,7 @@ app.get('/usuarios/login', async (req, res) => {
 // Ruta para obtener todas las películas
 app.get('/peliculas', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM peliculas');
+        const result = await pool.query('SELECT * FROM pelicula');
         res.json(result.rows);
     } catch (err) {
         console.error(err);
@@ -73,7 +73,7 @@ app.put('/peliculas/:id', async (req, res) => {
 
     try {
         const result = await pool.query(
-            'UPDATE peliculas SET titulo = $1, descripcion = $2, director = $3, anyo = $4, url_imagen = $5 WHERE id = $6 RETURNING *',
+            'UPDATE pelicula SET titulo = $1, descripcion = $2, director = $3, anyo = $4, urlimagen = $5 WHERE id = $6 RETURNING *',
             [titulo, descripcion, director, anyo, url_imagen, id]
         );
         

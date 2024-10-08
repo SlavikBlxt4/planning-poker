@@ -8,8 +8,11 @@ import com.example.loginandroid_29_09_2023.lstMov.data.DataMovies;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -26,6 +29,12 @@ public interface ApiService {
               @Query("EMAIL") String email,
               @Query("PASSWORD") String password
       );
+    // Método PUT para actualizar una película
+    @PUT("peliculas/{id}")
+    Call<Pelicula> updatePelicula(
+            @Path("id") int id,           // El ID de la película en la URL
+            @Body Pelicula pelicula        // El cuerpo de la petición que contiene los datos de la película
+    );
 
       /*@GET("MyServlet")
         Call<MyData> getDataUser(@Query("ACTION") String action,
@@ -38,9 +47,9 @@ public interface ApiService {
                                     @Query("director") String director);
       }*/
 
-  // Método que devuelve una lista de películas directamente
-  @GET("/peliculas")
-  Call<List<Pelicula>> getDataMovies(@Query("ACTION") String action);
+      // Método que devuelve una lista de películas directamente
+      @GET("/peliculas")
+      Call<List<Pelicula>> getDataMovies(@Query("ACTION") String action);
 
         @GET("MyServlet")
         Call<DataMovies> getDataMovies2(@Query("ACTION") String action);
